@@ -2,6 +2,11 @@ PERL=perl
 MKPATH=mkdir -p
 RMRF=rm -rf
 
+# Changes for Hadoop 1.0.3. To go back to pre-1.0 Hadoop,
+# set HADOOP_BIN=$(HADOOP_HOME)/hadoop
+# and HADOOP_STREAMING_PATH=$(HADOOP_HOME)
+HADOOP_BIN=hadoop   # Assume it's in the path.
+
 SCRIPT=script
 PRUNESCRIPTS=$(SCRIPT)/pruner
 PRUNEMAPPER=$(PRUNESCRIPTS)/mapper.pl
@@ -95,7 +100,7 @@ $(PHYLOMATICMAP) :
 sample_fishes : init_fishes
 	$(RMRF) $(TMP) $(SAMPLE)
 	$(PERL) $(SCRIPT)/randomtaxa.pl -i $(FISHMAP) -p $(PERCENTAGE) > $(SAMPLE)
-	$(HADOOP_HOME)/bin/hadoop  jar $(HADOOP_HOME)/hadoop-$(HADOOP_VERSION)-streaming.jar \
+	$(HADOOP_BIN)  jar $(HADOOP_STREAMING_PATH)/hadoop-streaming-$(HADOOP_VERSION).jar \
 		-cmdenv DATADIR=$(FISHDIR) \
 		-cmdenv PERL5LIB="$(PERL5LIB):lib" \
 		-input $(SAMPLE) \
@@ -109,7 +114,7 @@ sample_fishes : init_fishes
 sample_mammals : init_mammals
 	$(RMRF) $(TMP) $(SAMPLE)
 	$(PERL) $(SCRIPT)/randomtaxa.pl -i $(MAMMALMAP) -p $(PERCENTAGE) > $(SAMPLE)
-	$(HADOOP_HOME)/bin/hadoop  jar $(HADOOP_HOME)/hadoop-$(HADOOP_VERSION)-streaming.jar \
+	$(HADOOP_BIN)  jar $(HADOOP_STREAMING_PATH)/hadoop-streaming-$(HADOOP_VERSION).jar \
 		-cmdenv DATADIR=$(MAMMALDIR) \
 		-cmdenv PERL5LIB="$(PERL5LIB):lib" \
 		-input $(SAMPLE) \
@@ -123,7 +128,7 @@ sample_mammals : init_mammals
 sample_tol : init_tol
 	$(RMRF) $(TMP) $(SAMPLE)
 	$(PERL) $(SCRIPT)/randomtaxa.pl -i $(TOLMAP) -p $(PERCENTAGE) > $(SAMPLE)
-	$(HADOOP_HOME)/bin/hadoop  jar $(HADOOP_HOME)/hadoop-$(HADOOP_VERSION)-streaming.jar \
+	$(HADOOP_BIN)  jar $(HADOOP_STREAMING_PATH)/hadoop-streaming-$(HADOOP_VERSION).jar \
 		-cmdenv DATADIR=$(TOLDIR) \
 		-cmdenv PERL5LIB="$(PERL5LIB):lib" \
 		-input $(SAMPLE) \
@@ -137,7 +142,7 @@ sample_tol : init_tol
 sample_angio : init_angio
 	$(RMRF) $(TMP) $(SAMPLE)
 	$(PERL) $(SCRIPT)/randomtaxa.pl -i $(ANGIOMAP) -p $(PERCENTAGE) > $(SAMPLE)
-	$(HADOOP_HOME)/bin/hadoop  jar $(HADOOP_HOME)/hadoop-$(HADOOP_VERSION)-streaming.jar \
+	$(HADOOP_BIN)  jar $(HADOOP_STREAMING_PATH)/hadoop-streaming-$(HADOOP_VERSION).jar \
 		-cmdenv DATADIR=$(ANGIODIR) \
 		-cmdenv PERL5LIB="$(PERL5LIB):lib" \
 		-input $(SAMPLE) \
@@ -151,7 +156,7 @@ sample_angio : init_angio
 sample_phylomatic : init_phylomatic
 	$(RMRF) $(TMP) $(SAMPLE)
 	$(PERL) $(SCRIPT)/randomtaxa.pl -i $(PHYLOMATICMAP) -p $(PERCENTAGE) > $(SAMPLE)
-	$(HADOOP_HOME)/bin/hadoop  jar $(HADOOP_HOME)/hadoop-$(HADOOP_VERSION)-streaming.jar \
+	$(HADOOP_BIN)  jar $(HADOOP_STREAMING_PATH)/hadoop-streaming-$(HADOOP_VERSION).jar \
 		-cmdenv DATADIR=$(PHYLOMATICDIR) \
 		-cmdenv PERL5LIB="$(PERL5LIB):lib" \
 		-input $(SAMPLE) \
