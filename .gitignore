@@ -12,3 +12,5 @@ script\/pruner\/build
 outfile\.tre
 sample\.txt
 tmp/
+*.swp
+*~
