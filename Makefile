@@ -1,4 +1,5 @@
 PERL=perl
+PERL_PROVE=prove    # Can be hacked to run via perl if necessary, but probably easiest to run it directly.
 MKPATH=mkdir -p
 RMRF=rm -rf
 VERBOSITY=
@@ -39,7 +40,7 @@ PHYLOMATICTREE=$(RAWDATA)/Phylomatictree.nex
 PHYLOMATICDIR=$(EXAMPLES)/phylomatic
 PHYLOMATICMAP=$(PHYLOMATICDIR)/map.txt
 
-.PHONY : clean_mammals clean_fishes clean_tol clean_angio clean_phylomatic
+.PHONY : clean_mammals clean_fishes clean_tol clean_angio clean_phylomatic tests
 
 init_all : init_mammals init_fishes init_tol init_angio init_phylomatic
 
@@ -167,3 +168,6 @@ sample_phylomatic : init_phylomatic
 		-reducer $(PRUNEREDUCER) \
 		$(VERBOSITY)
 	$(PERL) $(SCRIPT)/newickify.pl $(TMP)/part-00000 > $(OUTFILE)
+
+tests:
+	$(PERL_PROVE) -Ilib t/*.t

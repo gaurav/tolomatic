@@ -1,8 +1,20 @@
 package Bio::PhyloTastic::TNRS::Interface;
+use Bio::Phylo::Factory;
 use Bio::Phylo::Util::Logger ':levels';
 use Data::Dumper;
 
-my $logger = Bio::Phylo::Util::Logger->new( '-level' => INFO );
+sub new {
+    my ($class) = @_;
+
+    my $self = {};
+    bless $self, $class;
+
+    # Set up a logger for us to use.
+    my $biophyfac = Bio::Phylo::Factory->new;
+    $self->{'logger'} = $biophyfac->create_logger;
+
+    return $self;
+}
 
 =item taxon2scname
 
@@ -33,7 +45,7 @@ Input (as arguments):
 
     taxon   The taxon name you want to translate.
 
-Output (as a hash):
+Output (as a hashref):
 
     scname  The scientific name with author information. Set to
             undef if no scientific name could be determined from
@@ -46,15 +58,21 @@ Output (as a hash):
 
 sub taxon2scname {
     my ( $self, $taxon ) = @_;
-    my $file = $ENV{'DATADIR'} . '/' . md5_hex($taxon);
-    $logger->info("taxon: $taxon (file: $file)");
-    open my $fh, '<', $file or die "Can't process taxon ${taxon} (${file}): $!";
-    my @lines = <$fh>;
-    my @fields = split /\t/, $lines[0];
-    $logger->debug("path: @fields");
-    for my $i ( 1 .. $#fields ) {
-        $self->emit( $fields[$i], $fields[0] );        
-    }
+
+    use Data::Dumper;
+    my $logger = $self->{'logger'} or die("Could not read the logger from this TNRS interface!");
+
+    # We might eventually let the TNRS::Interface run ALL the TNRSes and
+    # return the highest score, but it's not a big deal for now.
+    $logger->error("Attempt to convert a taxon name to a scientificName is being handled by the TNRS Interface, which doesn't do anything.");
+    $logger->error("Please choose a TNRS module and use that instead.");
+
+    $logger->info("Converted '$taxon' to '$taxon' via $self: score = 0.0");
+
+    return {
+        scname =>   $taxon,
+        score =>    0.0
+    };
 }
 
 1;
