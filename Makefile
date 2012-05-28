@@ -1,6 +1,7 @@
 PERL=perl
 MKPATH=mkdir -p
 RMRF=rm -rf
+VERBOSITY=
 
 # Changes for Hadoop 1.0.3. To go back to pre-1.0 Hadoop,
 # set HADOOP_BIN=$(HADOOP_HOME)/hadoop
@@ -108,7 +109,7 @@ sample_fishes : init_fishes
 		-mapper $(PRUNEMAPPER) \
 		-combiner $(PRUNECOMBINER) \
 		-reducer $(PRUNEREDUCER) \
-		-verbose
+		$(VERBOSITY)
 	$(PERL) $(SCRIPT)/newickify.pl $(TMP)/part-00000 > $(OUTFILE)
 
 sample_mammals : init_mammals
@@ -122,7 +123,7 @@ sample_mammals : init_mammals
 		-mapper $(PRUNEMAPPER) \
 		-combiner $(PRUNECOMBINER) \
 		-reducer $(PRUNEREDUCER) \
-		-verbose
+		$(VERBOSITY)
 	$(PERL) $(SCRIPT)/newickify.pl $(TMP)/part-00000 > $(OUTFILE)
 
 sample_tol : init_tol
@@ -136,7 +137,7 @@ sample_tol : init_tol
 		-mapper $(PRUNEMAPPER) \
 		-combiner $(PRUNECOMBINER) \
 		-reducer $(PRUNEREDUCER) \
-		-verbose
+		$(VERBOSITY)
 	$(PERL) $(SCRIPT)/newickify.pl $(TMP)/part-00000 > $(OUTFILE)
 
 sample_angio : init_angio
@@ -150,7 +151,7 @@ sample_angio : init_angio
 		-mapper $(PRUNEMAPPER) \
 		-combiner $(PRUNECOMBINER) \
 		-reducer $(PRUNEREDUCER) \
-		-verbose
+		$(VERBOSITY)
 	$(PERL) $(SCRIPT)/newickify.pl $(TMP)/part-00000 > $(OUTFILE)
 
 sample_phylomatic : init_phylomatic
@@ -164,5 +165,5 @@ sample_phylomatic : init_phylomatic
 		-mapper $(PRUNEMAPPER) \
 		-combiner $(PRUNECOMBINER) \
 		-reducer $(PRUNEREDUCER) \
-		-verbose
+		$(VERBOSITY)
 	$(PERL) $(SCRIPT)/newickify.pl $(TMP)/part-00000 > $(OUTFILE)
