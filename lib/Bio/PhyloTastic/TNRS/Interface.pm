@@ -50,9 +50,17 @@ Output (as a hashref):
     scname  The scientific name with author information. Set to
             undef if no scientific name could be determined from
             the input.
+    uri     A URL to the resource.
     score   A number indicating certainty of the translation, 
             ranging from 0 (complete uncertainty) to 1 
             (complete certainty).
+
+    OR
+
+    error   A string that indicates what went wrong.
+    retry   (0 or 1) If set to 1, indicates that this request
+            should be retried if necessary. A zero indicates
+            that a retry is useless.
 
 =cut
 
@@ -71,7 +79,8 @@ sub taxon2scname {
 
     return {
         scname =>   $taxon,
-        score =>    0.0
+        score =>    0.0,
+        uri =>      undef
     };
 }
 

@@ -6,8 +6,9 @@
 
 use strict;
 use warnings;
-use Test::More tests => 1;
+use Test::More tests => 2;
 
 use_ok('Bio::PhyloTastic::TNRS::Interface');
+use_ok('Bio::PhyloTastic::TNRS::EOL');
 
 1;
